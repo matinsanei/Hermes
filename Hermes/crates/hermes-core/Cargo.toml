@@ -1,0 +1,11 @@
+[package]
+name = "hermes-core"
+version = "0.1.0"
+edition = "2021"
+description = "Core traits and state management for the Hermes framework"
+
+[lib]
+name = "hermes_core"
+path = "src/lib.rs"
+
+[dependencies]

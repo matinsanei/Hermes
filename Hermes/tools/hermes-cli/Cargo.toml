@@ -1,0 +1,12 @@
+[package]
+name = "hermes-cli"
+version = "0.1.0"
+edition = "2021"
+description = "Command-line tool to inject formulas and monitor Hermes systems"
+
+[[bin]]
+name = "hermes-cli"
+path = "src/main.rs"
+
+[dependencies]
+hermes-protocol = { path = "../../crates/hermes-protocol" }
