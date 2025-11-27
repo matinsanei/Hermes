@@ -1,0 +1,11 @@
+[package]
+name = "hermes-plugins"
+version = "0.1.0"
+edition = "2021"
+description = "Plugins: PID, LQR, Kalman filters and small controller building blocks"
+
+[lib]
+name = "hermes_plugins"
+path = "src/lib.rs"
+
+[dependencies]
