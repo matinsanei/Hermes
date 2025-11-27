@@ -1,34 +1,38 @@
-//! Hermes Core
-//!
-//! This crate contains core traits and basic state-management primitives used across targets and plugins.
-//!
-//! Example trait:
+#![no_std]
 
-pub trait StateManager {
-    /// Advances the internal state by one step.
-    fn step(&mut self, dt_secs: f32);
+extern crate alloc;
+use alloc::vec::Vec;
 
-    /// Returns a debug snapshot of the internal state
-    fn snapshot(&self) -> String;
+/// Represents the state of the robot at a specific point in time.
+/// This is a generic container that can hold various sensor readings.
+#[derive(Debug, Clone, Default)]
+pub struct RobotState {
+    pub timestamp: u64, // Microseconds since boot
+    // We can add a generic map or specific fields here. 
+    // For now, let's keep it simple with a vector of float values for sensors.
+    pub sensors: Vec<f32>, 
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+/// Interface for interacting with the hardware (sensors and actuators).
+/// This trait will be implemented by the platform-specific code (e.g., hermes-node on ESP32, hermes-sim on PC).
+pub trait HardwareInterface {
+    /// Reads the current state of the sensors.
+    fn read_sensors(&mut self) -> Result<RobotState, HardwareError>;
 
-    struct Dummy {
-        t: f32,
-    }
+    /// Writes commands to the actuators.
+    /// `commands` is a vector of values corresponding to actuators.
+    fn write_actuators(&mut self, commands: &[f32]) -> Result<(), HardwareError>;
+}
 
-    impl StateManager for Dummy {
-        fn step(&mut self, dt_secs: f32) { self.t += dt_secs; }
-        fn snapshot(&self) -> String { format!("t={:.3}", self.t) }
-    }
+#[derive(Debug)]
+pub enum HardwareError {
+    SensorReadFailed,
+    ActuatorWriteFailed,
+    CommunicationError,
+}
 
-    #[test]
-    fn dummy_steps() {
-        let mut d = Dummy { t: 0.0 };
-        d.step(0.1);
-        assert_eq!(d.snapshot(), "t=0.100");
-    }
+/// The brain/reflex logic.
+/// Takes the current state and decides what to do.
+pub trait Controller {
+    fn update(&mut self, state: &RobotState) -> Vec<f32>;
 }

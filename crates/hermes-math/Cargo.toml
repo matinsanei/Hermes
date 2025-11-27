@@ -2,11 +2,7 @@
 name = "hermes-math"
 version = "0.1.0"
 edition = "2021"
-description = "Math utilities and dynamic formula parser for Hermes"
-
-[lib]
-name = "hermes_math"
-path = "src/lib.rs"
 
 [dependencies]
-regex = "1"
+# We will use `alloc` for dynamic ASTs, but try to keep it no_std compatible otherwise.
+# For parsing, we might use `nom` later, but for now let's keep it simple or add it if needed.

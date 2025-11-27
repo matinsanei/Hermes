@@ -1,14 +1,7 @@
 [workspace]
+resolver = "2"
 members = [
-    "crates/hermes-core",
-    "crates/hermes-math",
-    "crates/hermes-protocol",
-    "crates/hermes-plugins",
-    "targets/hermes-node",
-    "targets/hermes-sim",
-    "tools/hermes-cli",
+    "crates/*",
+    "targets/*",
+    "tools/*",
 ]
-
-
-[workspace.metadata]
-description = "Hermes — a modular robotics framework (workspace manager)"
