@@ -103,7 +103,6 @@ Quick start
 2. From repo root run `cargo build --workspace`
 
 ---
-Licensed under MIT OR Apache-2.0 (pick one when you start developing)
-
+Licensed under MIT 
 
 
